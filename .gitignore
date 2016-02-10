@@ -1,7 +1,6 @@
 # Dependancies
 .npm/
 node_modules/
-ssl/
 
 # Editor
 typings/
@@ -14,3 +13,5 @@ npm-debug.log*
 
 # Coverage
 coverage
+
+# Project specific
