@@ -1,0 +1,33 @@
+{
+  "name": "collins-slack",
+  "version": "0.0.1",
+  "description": "Service-gear for Collins to connect to a slack team.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikemimik/collins-slack.git"
+  },
+  "keywords": [
+    "service",
+    "gear",
+    "collins",
+    "bot",
+    "iot",
+    "slack",
+    "events"
+  ],
+  "author": "Michael Perrotte",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/mikemimik/collins-slack/issues"
+  },
+  "homepage": "https://github.com/mikemimik/collins-slack#readme",
+  "dependencies": {
+    "async": "^1.5.2",
+    "lodash": "^4.3.0",
+    "slack-client": "^2.0.0-beta.8"
+  }
+}
