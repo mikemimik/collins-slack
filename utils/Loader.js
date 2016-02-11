@@ -1,12 +1,8 @@
 'use strict';
 
 class Loader {
-  static init(next) {
-    console.log('>>', 'CollinsSlack','Loader', 'init', 'this:', this); // TESTING
-    next(null);
-  }
-
   static initConfig(next) {
+    console.log('>>', 'CollinsSlack','Loader', 'init', 'this:', this); // TESTING
 
     // TODO: convert `debug: true` into `debug: 'debug'`
     // TODO: convert `debug: false` into `debug: 'info'`??
@@ -39,6 +35,11 @@ class Loader {
     // if (logLevel === null || logLevel === undefined) { /* emit error */ }
     // if (logger === null || logger === undefined) { /* emit error */ }
     this.config = procConfig;
+    next(null);
+  }
+
+  static initGear(next) {
+
     next(null);
   }
 
