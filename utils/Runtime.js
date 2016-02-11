@@ -1,5 +1,5 @@
 'use strict';
 
-let Runtime = {};
+let Runtime = new Object();
 
 module.exports = Runtime;

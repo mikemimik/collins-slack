@@ -46,10 +46,10 @@ class Loader {
     const DataStore = Slack.MemoryDataStore;
 
     // INFO: making assumption config file has been processed
-    this._dataStore = new DataStore({ logLevel: this.config.debug });
-    this._client = new Client(this.config.token, {
+    this.Runtime['dataStore'] = new DataStore({ logLevel: this.config.debug });
+    this.Runtime['client'] = new Client(this.config.token, {
       logLevel: this.config.debug,
-      dataStore: this._dataStore
+      dataStore: this.Runtime['dataStore']
     });
     next(null);
   }

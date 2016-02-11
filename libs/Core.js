@@ -21,7 +21,6 @@ class CollinsSlack extends Emitter.EventEmitter {
     this.initialized = false;
     this.cogs = [];
     this.actions = [];
-    this._client = null;
     this._EVENTS = {
       CLIENT: Slack.EVENTS.CLIENT.RTM,
       API: Slack.EVENTS.API.EVENTS
@@ -51,18 +50,18 @@ class CollinsSlack extends Emitter.EventEmitter {
 
     // TESTING
     // INFO: collect all emitted events and re-emit them
-    events(this._client, '*', function() {
+    events(this.Runtime['client'], '*', function() {
       let args = Array.prototype.slice.apply(arguments);
       if (args[0] !== 'raw_message') {
         console.log('>>', 'TEST', 'CollinsSlack', 'event', args);
       }
     });
-    this._client.start();
+    this.Runtime['client'].start();
     next(null);
   }
 
   disconnect() {
-    this._client.disconnect();
+    this.Runtime['client'].disconnect();
   }
 }
 
