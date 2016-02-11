@@ -5,7 +5,7 @@ const Slack = require('slack-client');
 
 class Loader {
   static initConfig(next) {
-    console.log('>>', 'CollinsSlack','Loader', 'init', 'this:', this); // TESTING
+    console.log('>>', 'CollinsSlack', 'Loader', 'initConfig', 'this:', this); // TESTING
 
     // TODO: convert `debug: true` into `debug: 'debug'`
     // TODO: convert `debug: false` into `debug: 'info'`??
