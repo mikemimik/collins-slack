@@ -57,6 +57,7 @@ class CollinsSlack extends Emitter.EventEmitter {
         console.log('>>', 'TEST', 'CollinsSlack', 'event', args);
       }
     });
+    this._client.start();
     next(null);
   }
 
