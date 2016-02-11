@@ -1,5 +1,8 @@
 'use strict';
 
+// INFO: npm-service-module
+const Slack = require('slack-client');
+
 class Loader {
   static initConfig(next) {
     console.log('>>', 'CollinsSlack','Loader', 'init', 'this:', this); // TESTING
@@ -39,7 +42,15 @@ class Loader {
   }
 
   static initGear(next) {
+    const Client = Slack.RtmClient;
+    const DataStore = Slack.MemoryDataStore;
 
+    // INFO: making assumption config file has been processed
+    this._dataStore = new DataStore({ logLevel: this.config.debug });
+    this._client = new Client(this.config.token, {
+      logLevel: this.config.debug,
+      dataStore: this._dataStore
+    });
     next(null);
   }
 

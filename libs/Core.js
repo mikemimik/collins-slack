@@ -47,14 +47,7 @@ class CollinsSlack extends Emitter.EventEmitter {
   log() {}
 
   connect(next) {
-    const Client = Slack.RtmClient;
-
-    // INFO: making assumption config file has been processed
-    this._client = new Client(this.config.token, { logLevel: this.config.debug });
-
-    this._client.on(this._EVENTS.API.MESSAGE, Listeners.onMessage.bind(this));
-    this._client.on(this._EVENTS.CLIENT.CONNECTING, Listeners.onConnecting.bind(this));
-    this._client.start();
+    // this._client.on(this._EVENTS.API.MESSAGE, Listeners.onMessage.bind(this));
 
     // TESTING
     // INFO: collect all emitted events and re-emit them
