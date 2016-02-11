@@ -9,6 +9,7 @@ const Listeners = require('./Listeners');
 const Emitter = require('events');
 const async = require('async');
 const _ = require('lodash');
+const events = require('wildcards');
 
 // INFO: npm-service-module
 const Slack = require('slack-client');
@@ -50,8 +51,20 @@ class CollinsSlack extends Emitter.EventEmitter {
 
     // INFO: making assumption config file has been processed
     this._client = new Client(this.config.token, { logLevel: this.config.debug });
-    this._client.start();
+
     this._client.on(this._EVENTS.API.MESSAGE, Listeners.onMessage.bind(this));
+    this._client.on(this._EVENTS.CLIENT.CONNECTING, Listeners.onConnecting.bind(this));
+    this._client.start();
+
+    // TESTING
+    // INFO: collect all emitted events and re-emit them
+    events(this._client, '*', function() {
+      let args = Array.prototype.slice.apply(arguments);
+      if (args[0] !== 'raw_message') {
+        console.log('>>', 'TEST', 'CollinsSlack', 'event', args);
+      }
+    });
+    next(null);
   }
 
   disconnect() {
