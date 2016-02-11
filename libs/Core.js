@@ -30,13 +30,15 @@ class CollinsSlack extends Emitter.EventEmitter {
 
   init(next) {
     async.series([
-      Loader.init.bind(this),
       Loader.initConfig.bind(this),
+      Loader.initGear.bind(this),
       Loader.initCogs.bind(this),
       Loader.initActions.bind(this)
     ], (err, result) => {
+      this.initialized = true;
 
       // INFO: all the initializations have been completed
+      console.log('>>', 'TESTING', this.constructor.name, 'finished init', 'RESULT:', result);
       next(err);
     });
   }
