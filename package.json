@@ -28,7 +28,7 @@
   "dependencies": {
     "async": "^1.5.2",
     "lodash": "^4.3.0",
-    "slack-client": "^2.0.0-beta.8",
+    "slack-client": "^2.0.2",
     "wildcards": "^1.0.2"
   }
 }
