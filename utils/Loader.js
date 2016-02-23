@@ -5,14 +5,11 @@ const Slack = require('slack-client');
 
 class Loader {
   static initConfig(next) {
-    console.log('>>', 'CollinsSlack', 'Loader', 'initConfig', 'this:', this); // TESTING
+    this.logger.gear('CollinsSlack', 'Loader', 'initConfig', 'this:', this); // TESTING
 
     // TODO: convert `debug: true` into `debug: 'debug'`
     // TODO: convert `debug: false` into `debug: 'info'`??
-    let procConfig = this.config;
-    if (procConfig.debug) {
-      procConfig.debug = 'verbose';
-    }
+    let processedConfig = this.config;
     // let {
     //   token, /* required */
     //   socketFn, /* optional */
@@ -37,7 +34,7 @@ class Loader {
     // if (maxPongInterval === null || maxPongInterval === undefined) { /* emit error */ }
     // if (logLevel === null || logLevel === undefined) { /* emit error */ }
     // if (logger === null || logger === undefined) { /* emit error */ }
-    this.config = procConfig;
+    this.config = processedConfig;
     next(null);
   }
 
@@ -46,9 +43,9 @@ class Loader {
     const DataStore = Slack.MemoryDataStore;
 
     // INFO: making assumption config file has been processed
-    this.Runtime['dataStore'] = new DataStore({ logLevel: this.config.debug });
+    this.Runtime['dataStore'] = new DataStore({ logger: this.logger });
     this.Runtime['client'] = new Client(this.config.token, {
-      logLevel: this.config.debug,
+      logger: this.logger,
       dataStore: this.Runtime['dataStore']
     });
     next(null);

@@ -18,12 +18,14 @@ class CollinsSlack extends Emitter.EventEmitter {
   constructor(config) {
     super();
     this.config = config;
+    this.logger = this.config.logger;
+    delete this.config.logger;
     this.initialized = false;
     this.cogs = [];
     this.actions = [];
     this._EVENTS = {
-      CLIENT: Slack.EVENTS.CLIENT.RTM,
-      API: Slack.EVENTS.API.EVENTS
+      CLIENT: Slack.CLIENT_EVENTS.RTM,
+      API: Slack.RTM_EVENTS
     };
     this.Runtime = require('../utils/Runtime');
   }
@@ -38,7 +40,7 @@ class CollinsSlack extends Emitter.EventEmitter {
       this.initialized = true;
 
       // INFO: all the initializations have been completed
-      console.log('>>', 'TESTING', this.constructor.name, 'finished init', 'RESULT:', result);
+      this.logger.gear('TESTING', this.constructor.name, 'finished init', 'RESULT:', result);
       next(err);
     });
   }
@@ -50,12 +52,12 @@ class CollinsSlack extends Emitter.EventEmitter {
 
     // TESTING
     // INFO: collect all emitted events and re-emit them
-    events(this.Runtime['client'], '*', function() {
-      let args = Array.prototype.slice.apply(arguments);
-      if (args[0] !== 'raw_message') {
-        console.log('>>', 'TEST', 'CollinsSlack', 'event', args);
-      }
-    });
+    // events(this.Runtime['client'], '*', function() {
+    //   let args = Array.prototype.slice.apply(arguments);
+    //   if (args[0] !== 'raw_message') {
+    //     console.log('>>', 'TEST', 'CollinsSlack', 'event', args);
+    //   }
+    // });
     this.Runtime['client'].start();
     next(null);
   }
