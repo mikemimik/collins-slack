@@ -15,7 +15,7 @@ const events = require('wildcards');
 // INFO: npm-service-module
 const Slack = require('slack-client');
 
-class CollinsSlack extends Emitter.EventEmitter {
+class CollinsSlack extends Emitter.EventEmitter2 {
   constructor(config) {
     super();
     this.config = config;
