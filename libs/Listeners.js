@@ -1,8 +1,10 @@
 'use strict';
 
+const Service = require('../utils/Service');
+
 class Listeners {
-  static onMessage(message) {
-    console.log('>>', 'CollinsSlack', 'msg', message);
+  static message(context, data) {
+    Service.interpret.bind(context, data);
   }
 }
 
