@@ -4,9 +4,10 @@
 const CoreError = require('./CoreError');
 const Loader = require('../utils/Loader');
 const Listeners = require('./Listeners');
+const Service = require('../utils/Service');
 
 // INFO: common modules
-const Emitter = require('events');
+const Emitter = require('eventemitter2');
 const async = require('async');
 const _ = require('lodash');
 const events = require('wildcards');
