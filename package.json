@@ -27,8 +27,11 @@
   "homepage": "https://github.com/mikemimik/collins-slack#readme",
   "dependencies": {
     "async": "^1.5.2",
+    "eventemitter2": "^1.0.0",
     "lodash": "^4.3.0",
-    "slack-client": "^2.0.2",
+    "slack-client": "^2.0.2"
+  },
+  "devDependencies": {
     "wildcards": "^1.0.2"
   }
 }
