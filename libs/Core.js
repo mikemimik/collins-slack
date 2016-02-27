@@ -36,7 +36,7 @@ class CollinsSlack extends Emitter.EventEmitter2 {
       Loader.initConfig.bind(this),
       Loader.initGear.bind(this),
       Loader.initCogs.bind(this),
-      Loader.initActions.bind(this)
+      Loader.initListeners.bind(this)
     ], (err, result) => {
       this.initialized = true;
 
@@ -59,16 +59,7 @@ class CollinsSlack extends Emitter.EventEmitter2 {
     //     console.log('>>', 'TEST', 'CollinsSlack', 'event', args);
     //   }
     // });
-    // TODO: implement an array of listeners
-    // TODO: init over array and `.on` all the listeners for the client
-    let listenTo = ['message'];
-    async.each(listenTo, (listenEvent, each_cb) => {
-      this.Runtime['client'].on(listenEvent, _.bind(Listeners[listenEvent], this, _));
-    }, (err) => {
 
-      // INFO: all listeners have been attached to the client
-    });
-    this.Runtime['client'].on('message', _.bind(Listeners['message'], this, _));
     this.Runtime['client'].start();
     next(null);
   }
