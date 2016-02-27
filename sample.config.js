@@ -14,6 +14,8 @@
 
 module.exports = {
   token: 'xoxb-xxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx',
+  commandChar: '!',
   userAgent: 'inherit',
+  logger: 'inherit',
   debug: 'inherit'
 };
