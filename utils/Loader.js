@@ -86,10 +86,10 @@ class Loader {
       }
     }, (err) => {
       if (err) {
-        console.log('async.each failed while client.on() was called');
+        console.log('async.each failed while client.on() was called'); // TESTING
       }
+      next(err);
     });
-    next(null);
   }
 }
 
