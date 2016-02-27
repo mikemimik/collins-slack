@@ -47,25 +47,28 @@ class Service {
 
     async.each(triggers, (t, foundTrigger_cb) => {
       let ct = t.substring(1);
-      console.log('current found trigger:', t); // TESTING
+      // console.log('current found trigger:', t); // TESTING
       async.each(context.Runtime.cogs, (cog, eachCog_cb) => {
-        console.log('current runtime cog:', cog);
+        // console.log('current runtime cog:', cog); // TESTING
         async.forEachOf(cog.triggers, (cmd, key, eachTrigger_cb) => {
           // key === trigger name
           // value === what to do
-          console.log('current cog trigger:', key);
+          // console.log('current cog trigger:', key); // TESTING
           if (ct === key) {
-            console.log('same');
+            // console.log('same'); // TESTING
             if (typeof cmd === 'function') {
               // INFO: run the function
-              eachTrigger_cb(null);
+              cmd.apply(this, [msg, (err, response) => {
+                context.Runtime.client.sendMessage(response, msg.from.channel);
+                eachTrigger_cb(null);
+              }]);
             } else if (typeof cmd === 'string') {
               context.Runtime.client.sendMessage(cmd, msg.from.channel);
               eachTrigger_cb(null);
             }
           } else {
-            console.log('ct:', ct);
-            console.log('key:', key);
+            // console.log('ct:', ct); // TESTING
+            // console.log('key:', key); // TESTING
           }
         }, (err) => {
           // INFO: all triggers for one cog have been processed
