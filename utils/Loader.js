@@ -1,5 +1,12 @@
 'use strict';
 
+// INFO: service-gear specific modules
+const Listeners = require('../libs/Listeners');
+
+// INFO: common modules
+const _ = require('lodash');
+const async = require('async');
+
 // INFO: npm-service-module
 const Slack = require('slack-client');
 
@@ -52,11 +59,36 @@ class Loader {
   }
 
   static initCogs(next) {
+    // console.log(this.constructor.name, 'initCogs', this.config.cogs); // TESTING
+    this.Runtime['cogs'] = [];
+    let cogList = _.keys(this.config.cogs);
+    async.each(cogList, (cog, each_cb) => {
+      this.Runtime.cogs.push(this.config.cogs[cog]);
+
+      each_cb(null);
+    }, (err) => {
+      // INFO: all cog triggers have been added to the Listener class
+      // console.log('finished async.each'); // TESTING
+    });
+
+    // console.log('runtime:', this.Runtime.cogs); // TESTING
     next(null);
   }
 
-  // TODO: turn this into the initListeners function re: core-todos
-  static initActions(next) {
+  static initListeners(next) {
+    let listeners = Listeners.getMethods();
+    async.each(listeners, (listener, each_cb) => {
+      let check = this.Runtime['client'].on(listener, _.bind(Listeners[listener], this, _));
+      if (check === this.Runtime['client']) {
+        each_cb(null);
+      } else {
+        each_cb(true);
+      }
+    }, (err) => {
+      if (err) {
+        console.log('async.each failed while client.on() was called');
+      }
+    });
     next(null);
   }
 }
