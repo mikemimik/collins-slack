@@ -57,11 +57,29 @@ class Service {
           if (ct === key) {
             // console.log('same'); // TESTING
             if (typeof cmd === 'function') {
-              // INFO: run the function
-              cmd.apply(this, [msg, (err, response) => {
-                context.Runtime.client.sendMessage(response, msg.from.channel);
-                eachTrigger_cb(null);
-              }]);
+
+              // INFO: determine call signature
+              let params = cmd.toString()
+                .replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s))/mg,'')
+                .match(/^function\s*[^\(]*\(\s*([^\)]*)\)/m)[1]
+                .split(/,/);
+
+              // INFO: checking the 2nd param: callback or context needed?
+              switch(params[1]) {
+                case 'cb':
+                case 'callback':
+                  cmd(msg, (err, data) => {
+                    context.Runtime.client.sendMessage(data, msg.from.channel);
+                    eachTrigger_cb(err);
+                  });
+                  break;
+                case 'context':
+
+                  // TODO: create context to send
+                  cmd(msg, { });
+                  eachTrigger_cb(null);
+                  break;
+              }
             } else if (typeof cmd === 'string') {
               context.Runtime.client.sendMessage(cmd, msg.from.channel);
               eachTrigger_cb(null);
