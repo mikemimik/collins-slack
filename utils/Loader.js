@@ -14,8 +14,6 @@ class Loader {
   static initConfig(next) {
     this.logger.gear('CollinsSlack', 'Loader', 'initConfig', 'this:', this); // TESTING
 
-    // TODO: convert `debug: true` into `debug: 'debug'`
-    // TODO: convert `debug: false` into `debug: 'info'`??
     let processedConfig = this.config;
     // let {
     //   token, /* required */

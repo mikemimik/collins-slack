@@ -5,12 +5,16 @@
  *
  * Contents:
  * - token
+ * - commandChar
+ * - userAgent (should be inherited)
+ * - logger
  *
  * Inheritables:
+ * - commandChar
  * - userAgent
+ * - logger
  * - debug
  */
-
 
 module.exports = {
   token: 'xoxb-xxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx',

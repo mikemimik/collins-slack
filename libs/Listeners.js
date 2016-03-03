@@ -14,7 +14,6 @@ class Listeners {
     } else {
       Service.interpret(data, this);
     }
-
   }
 
   /**
