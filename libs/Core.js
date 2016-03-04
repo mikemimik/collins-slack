@@ -38,6 +38,9 @@ class CollinsSlack extends Emitter.EventEmitter2 {
       Loader.initCogs.bind(this),
       Loader.initListeners.bind(this)
     ], (err, result) => {
+      if (err) {
+        // TODO: emit an error up to collins
+      }
       this.initialized = true;
 
       // INFO: all the initializations have been completed

@@ -15,21 +15,28 @@ class Loader {
     this.logger.gear('CollinsSlack', 'Loader', 'initConfig', 'this:', this); // TESTING
 
     let processedConfig = this.config;
-    // let {
-    //   token, /* required */
-    //   socketFn, /* optional */
-    //   dataStore, /* optional */
-    //   autoReconnect, /* optional */
-    //   maxReconnectionAttempts, /* optional */
-    //   reconnectionBackoff, /* optional */
-    //   wsPingInterval, /* optional */
-    //   maxPongInterval, /* optional */
-    //   logLevel, /* optional (Default: 'info') */
-    //   logger /* optional, probably don't use this */
-    // } = this.config;
-    // if (token === null || token === undefined) { /* emit error */ }
+    let {
+      token, /* required */
+      commandChar, /* required */
+      dataStore, /* required; should be */
+      logger, /* required; should be */
+      userAgent,
+      debug,
+      // autoReconnect, /* optional - npm service module option */
+      // maxReconnectionAttempts, /* optional - npm service module option */
+      // reconnectionBackoff, /* optional - npm service module option */
+      // wsPingInterval, /* optional - npm service module option */
+      // maxPongInterval, /* optional - npm service module option */
+      // socketFn, /* optional - npm service module option */
+      // logLevel, /* optional (Default: 'info') */
+    } = this.config;
+    if (token === null || token === undefined) { /* emit error */ }
+    if (dataStore === null || dataStore === undefined) { /* emit error */ }
+    if (commandChar === null || commandChar === undefined) { /* emit error */ }
+    if (logger === null || logger === undefined) { /* emit error */ }
+    if (userAgent === null || userAgent === undefined) { /* emit error */ }
+    if (debug === null || debug === undefined) { /* emit error */ }
     // if (socketFn === null || socketFn === undefined) { /* emit error */ }
-    // if (dataStore === null || dataStore === undefined) { /* emit error */ }
     // if (autoReconnect === null || autoReconnect === undefined) { /* emit error */ }
     // if (maxReconnectionAttempts === null || maxReconnectionAttempts === undefined) {
     //   /* emit error */
@@ -38,7 +45,6 @@ class Loader {
     // if (wsPingInterval === null || wsPingInterval === undefined) { /* emit error */ }
     // if (maxPongInterval === null || maxPongInterval === undefined) { /* emit error */ }
     // if (logLevel === null || logLevel === undefined) { /* emit error */ }
-    // if (logger === null || logger === undefined) { /* emit error */ }
     this.config = processedConfig;
     next(null);
   }
