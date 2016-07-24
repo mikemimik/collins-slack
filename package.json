@@ -26,13 +26,20 @@
   },
   "homepage": "https://github.com/mikemimik/collins-slack#readme",
   "dependencies": {
+    "@slack/client": "^3.5.1",
     "async": "^2.0.1",
     "eventemitter2": "^2.0.0",
-    "lodash": "^4.14.0",
-    "slack-client": "^2.0.6"
+    "lodash": "^4.14.0"
   },
   "devDependencies": {
     "mocha": "^2.5.3",
+    "semistandard": "^8.0.0",
     "wildcards": "^1.0.2"
+  },
+  "semistandard": {
+    "globals": [
+      "describe",
+      "it"
+    ]
   }
 }
