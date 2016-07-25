@@ -11,36 +11,47 @@ const async = require('async');
 // INFO: npm-service-module
 const Slack = require('@slack/client');
 
-class CollinsSlack extends Emitter.EventEmitter2 {
-  constructor(config) {
-    super();
-    this.config = config;
-    this.logger = this.config.logger;
-    delete this.config.logger;
-    this.initialized = false;
+class CollinsSlack extends Emitter {
+  constructor (coreConfig) {
+    super({
+      wildcard: true,
+      delimiter: ':'
+    });
     this.cogs = [];
     this.actions = [];
+    this.configuration = new Configuration();
+    this.configuration.files.push('index.js');
+    this.Runtime = require('../utils/Runtime');
+    // INFO: internally storying info for convenience
+    // TODO: don't do this
     this._EVENTS = {
       CLIENT: Slack.CLIENT_EVENTS.RTM,
       API: Slack.RTM_EVENTS
     };
-    this.Runtime = require('../utils/Runtime');
   }
 
   init (next) {
+    // TODO: initialize logger
     async.series([
       Loader.initConfig.bind(this),
       Loader.initGear.bind(this),
       Loader.initCogs.bind(this),
       Loader.initListeners.bind(this)
-    ], (err, result) => {
+    ], (err, results) => {
       if (err) {
         // TODO: emit an error up to collins
+        next(err);
       }
+
+      // INFO: A loader init stage errored
+      results.forEach((result) => {
+        if (result) {
+
+        }
+      });
       this.initialized = true;
 
       // INFO: all the initializations have been completed
-      this.logger.gear('TESTING', this.constructor.name, 'finished init', 'RESULT:', result);
       next(err);
     });
   }
