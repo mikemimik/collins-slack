@@ -1,19 +1,15 @@
 'use strict';
 
 // INFO: service-gear specific modules
-const CoreError = require('./CoreError');
+const Configuration = require('./Configuration');
 const Loader = require('../utils/Loader');
-const Listeners = require('./Listeners');
-const Service = require('../utils/Service');
 
 // INFO: common modules
-const Emitter = require('eventemitter2');
+const Emitter = require('eventemitter2').EventEmitter2;
 const async = require('async');
-const _ = require('lodash');
-const events = require('wildcards');
 
 // INFO: npm-service-module
-const Slack = require('slack-client');
+const Slack = require('@slack/client');
 
 class CollinsSlack extends Emitter.EventEmitter2 {
   constructor(config) {
@@ -60,13 +56,11 @@ class CollinsSlack extends Emitter.EventEmitter2 {
     //     console.log('>>', 'TEST', 'CollinsSlack', 'event', args);
     //   }
     // });
-
     this.Runtime['client'].start();
     next(null);
   }
 
   disconnect () {
-    this.logger.gear(this.constructor.name, 'Core#disconnect');
     this.Runtime['client'].disconnect();
   }
 }
