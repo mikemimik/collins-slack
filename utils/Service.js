@@ -8,8 +8,7 @@ class Service {
   /**
    * Function for interpreting messages
    */
-  static interpret(data, context) {
-
+  static interpret (data, context) {
     let selfId = context.Runtime.client.activeUserId;
     let self = context.Runtime.dataStore.users[selfId]; // INFO: is this needed?
     if (data.user === selfId) {
@@ -60,7 +59,7 @@ class Service {
 
               // INFO: determine call signature
               let params = cmd.toString()
-                .replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s))/mg,'')
+                .replace(/((\/\/.*$)|(\/\*[\s\S]*?\*\/)|(\s))/mg, '')
                 .match(/^function\s*[^\(]*\(\s*([^\)]*)\)/m)[1]
                 .split(/,/);
 
@@ -99,7 +98,6 @@ class Service {
     }, (err) => {
       console.log('Service class', 'error firing trigger', err); // TESTING
     });
-
   }
 }
 

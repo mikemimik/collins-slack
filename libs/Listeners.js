@@ -21,17 +21,16 @@ class Listeners {
    *
    * @retuns {Array} methods List of static functions in this class
    */
-  static getMethods() {
-
+  static getMethods () {
     // INFO: get all properties of this class (object)
     let methods = Object.getOwnPropertyNames(this);
 
     // INFO: filter out ones we don't want
     methods = _.filter(methods, (prop) => {
-      return prop !== 'name'
-        && prop !== 'length'
-        && prop !== 'prototype'
-        && prop !== 'getMethods';
+      return prop !== 'name' &&
+        prop !== 'length' &&
+        prop !== 'prototype' &&
+        prop !== 'getMethods';
     });
     return methods;
   }
