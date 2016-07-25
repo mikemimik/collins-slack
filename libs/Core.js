@@ -31,7 +31,7 @@ class CollinsSlack extends Emitter.EventEmitter2 {
     this.Runtime = require('../utils/Runtime');
   }
 
-  init(next) {
+  init (next) {
     async.series([
       Loader.initConfig.bind(this),
       Loader.initGear.bind(this),
@@ -49,11 +49,9 @@ class CollinsSlack extends Emitter.EventEmitter2 {
     });
   }
 
-  log() {}
+  log () {}
 
-  connect(next) {
-    // this._client.on(this._EVENTS.API.MESSAGE, Listeners.onMessage.bind(this));
-
+  connect (next) {
     // TESTING
     // INFO: collect all emitted events and re-emit them
     // events(this.Runtime['client'], '*', function() {
@@ -67,7 +65,8 @@ class CollinsSlack extends Emitter.EventEmitter2 {
     next(null);
   }
 
-  disconnect() {
+  disconnect () {
+    this.logger.gear(this.constructor.name, 'Core#disconnect');
     this.Runtime['client'].disconnect();
   }
 }
