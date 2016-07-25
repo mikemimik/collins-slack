@@ -4,7 +4,6 @@ node_modules/
 
 # Editor
 typings/
-jsconfig.json
 
 # Logs
 logs/
