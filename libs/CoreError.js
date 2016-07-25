@@ -1,33 +1,60 @@
 'use strict';
 
-class ExtendableError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = this.constructor.name;
-    this.message = message;
-    Error.captureStackTrace(this, this.constructor.name);
-  }
-}
+const ErrorTypes = require('./ErrorTypes');
+const async = require('async');
+const _ = require('lodash');
 
 /**
  * @summary Error class for delivering errors for this service-gear
  *
- * @param {String} type The error type name
- * @param {Object} data The data from the error
+ * @param {String} type Error type name
+ * @param {Object} data Data given to the error
  */
-class SlackError extends ExtendableError {
-  constructor(type, data) {
-    super('constructor'); // TODO: is this correct?
-    this.data = (data) ? data : {};
+class SlackError extends Error {
+  constructor (type, data) {
+    super();
+    this.name = this.constructor.name;
+    this.data = data || {};
     this.type = type;
-    this.message = '\'' + type + '\' error message received';
-    let reason = data.details || data.reason;
-    if (reason) {
-      this.message += ':\n"' + reason + '"\n';
+    async.each(
+      type.split(':'),
+      function checkType (errorType, cb) {
+        if (!_.includes(ErrorTypes, errorType.toLowerCase())) {
+          cb(true);
+        } else {
+          cb(null);
+        }
+      },
+      (err) => {
+        if (err) {
+          throw new SlackError('TypeError', {
+            details: 'invalid error type give to error object'
+          });
+        } else {
+          this.type = type;
+        }
+      }
+    );
+    this.message = `<${this.type}> error message received`;
+    let reasons = this.data.details || this.data.reasons;
+    if (reasons) {
+      this.message += ': ';
+      if (Array.isArray(reasons)) {
+        reasons.forEach((reason, index) => {
+          this.message += `${index + 1}> ${reason}`;
+        });
+      } else {
+        this.message += `${reasons}`;
+      }
     } else {
-      this.message += '. ';
+      this.message += '.';
     }
-    this.message += 'See \'data\' for details.';
+  }
+
+  static convert (type, error) {
+    // INFO: given an Error, return a SlackError
+    let details = { details: error.message };
+    return new SlackError(type, details);
   }
 }
 
