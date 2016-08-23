@@ -13,6 +13,17 @@ const Slack = require('slack-client');
 
 class Loader {
 
+  /**
+   * @static
+   * @desc Function which loads the passed in configuration object from
+   *       `collins-core`. It then validates that config object against the
+   *       module's `schema`.
+   * @summary gear config validation
+   * @param {Object} config The `service-gear` instance corresponding to this
+   *                        service, passed in from`collins-core`.
+   *
+   * @param {Function} next Callback function.
+   */
   static initConfig (config, next) {
     this.logger.gear(this.constructor.name, 'Loader#initConfig');
     this.configuration.configObj.load(config.config);
