@@ -26,15 +26,15 @@ class Loader {
    */
   static initConfig (config, next) {
     this.logger.gear(this.constructor.name, 'Loader#initConfig');
-    this.configuration.configObj.load(config.config);
+    this.configuration.configObj.load(config);
+    let validationError = null;
     try {
       this.configuration.configObj.validate();
     } catch (e) {
-      let validationError = SlackError.convert('Invalid:Config', e);
-      next(validationError);
+      validationError = SlackError.convert('Invalid:Config', e);
     }
     this.logger.gear(this.constructor.name, 'Loader#initConfig', 'complete');
-    next(null);
+    next(validationError);
   }
 
   static initGear(next) {
