@@ -9,7 +9,7 @@ const _ = require('lodash');
 const async = require('async');
 
 // INFO: npm-service-module
-const Slack = require('slack-client');
+const Slack = require('@slack/client');
 
 class Loader {
 
