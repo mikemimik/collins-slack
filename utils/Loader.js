@@ -2,6 +2,7 @@
 
 // INFO: service-gear specific modules
 const Listeners = require('../libs/Listeners');
+const SlackError = require('collins-error');
 
 // INFO: common modules
 const _ = require('lodash');
