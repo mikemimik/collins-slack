@@ -12,41 +12,17 @@ const async = require('async');
 const Slack = require('slack-client');
 
 class Loader {
-  static initConfig(next) {
-    this.logger.gear('CollinsSlack', 'Loader', 'initConfig', 'this:', this); // TESTING
 
-    let processedConfig = this.config;
-    let {
-      token, /* required */
-      commandChar, /* required */
-      dataStore, /* required; should be */
-      logger, /* required; should be */
-      userAgent,
-      debug,
-      // autoReconnect, /* optional - npm service module option */
-      // maxReconnectionAttempts, /* optional - npm service module option */
-      // reconnectionBackoff, /* optional - npm service module option */
-      // wsPingInterval, /* optional - npm service module option */
-      // maxPongInterval, /* optional - npm service module option */
-      // socketFn, /* optional - npm service module option */
-      // logLevel, /* optional (Default: 'info') */
-    } = this.config;
-    if (token === null || token === undefined) { /* emit error */ }
-    if (dataStore === null || dataStore === undefined) { /* emit error */ }
-    if (commandChar === null || commandChar === undefined) { /* emit error */ }
-    if (logger === null || logger === undefined) { /* emit error */ }
-    if (userAgent === null || userAgent === undefined) { /* emit error */ }
-    if (debug === null || debug === undefined) { /* emit error */ }
-    // if (socketFn === null || socketFn === undefined) { /* emit error */ }
-    // if (autoReconnect === null || autoReconnect === undefined) { /* emit error */ }
-    // if (maxReconnectionAttempts === null || maxReconnectionAttempts === undefined) {
-    //   /* emit error */
-    // }
-    // if (reconnectionBackoff === null || reconnectionBackoff === undefined) { /* emit error */ }
-    // if (wsPingInterval === null || wsPingInterval === undefined) { /* emit error */ }
-    // if (maxPongInterval === null || maxPongInterval === undefined) { /* emit error */ }
-    // if (logLevel === null || logLevel === undefined) { /* emit error */ }
-    this.config = processedConfig;
+  static initConfig (config, next) {
+    this.logger.gear(this.constructor.name, 'Loader#initConfig');
+    this.configuration.configObj.load(config.config);
+    try {
+      this.configuration.configObj.validate();
+    } catch (e) {
+      let validationError = SlackError.convert('Invalid:Config', e);
+      next(validationError);
+    }
+    this.logger.gear(this.constructor.name, 'Loader#initConfig', 'complete');
     next(null);
   }
 
