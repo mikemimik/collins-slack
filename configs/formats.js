@@ -19,13 +19,5 @@ module.exports = [
         throw new Error('must be sincle character');
       }
     }
-  },
-  {
-    name: 'inheritable',
-    validate: function validateType (val) {
-      if (val !== 'inherit') {
-        
-      }
-    }
   }
 ];
