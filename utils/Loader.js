@@ -37,17 +37,22 @@ class Loader {
     next(validationError);
   }
 
-  static initGear(next) {
+  static initGear (next) {
+    this.logger.gear(this.constructor.name, 'Loader#initGear');
+    let validationError = null;
     const Client = Slack.RtmClient;
     const DataStore = Slack.MemoryDataStore;
-
-    // INFO: making assumption config file has been processed
-    this.Runtime['dataStore'] = new DataStore({ logger: this.logger });
-    this.Runtime['client'] = new Client(this.config.token, {
-      logger: this.logger,
-      dataStore: this.Runtime['dataStore']
-    });
-    next(null);
+    try {
+      this.Runtime['dataStore'] = new DataStore({ logger: this.logger });
+      this.Runtime['client'] = new Client(
+        this.configuration.configObj.get('token'),
+        { logger: this.logger, dataStore: this.Runtime['dataStore'] }
+      );
+    } catch (e) {
+      validationError = SlackError.convert('Invalid:Config', e);
+    }
+    this.logger.gear(this.constructor.name, 'Loader#initGear', 'complete');
+    next(validationError);
   }
 
   static initCogs(next) {
