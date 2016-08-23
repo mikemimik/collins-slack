@@ -12,7 +12,7 @@ let defaultSchema = {
   },
   userAgent: {
     doc: 'User Agent to use while accessing networks',
-    format: 'inheritable',
+    format: String,
     default: 'collins-slack'
   }
 };
