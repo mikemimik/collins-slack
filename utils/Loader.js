@@ -37,6 +37,17 @@ class Loader {
     next(validationError);
   }
 
+  /**
+   * @static
+   * @desc Initializes this gear to be ready to connect to it's service.
+   *       Creates a `DataStore` object which slack uses to store information
+   *       while connected to a slack team. Then creates a `Client` object
+   *       will connects utilizing the token passed to it from the
+   *       initialization of `collins-core`, `this.logger`, and a `dataStore`
+   *       object, just created.
+   * @summary gear initialization: specific to npm-service-module
+   * @param {Function} next Callback function.
+   */
   static initGear (next) {
     this.logger.gear(this.constructor.name, 'Loader#initGear');
     let validationError = null;
