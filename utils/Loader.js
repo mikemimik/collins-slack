@@ -5,8 +5,8 @@ const Listeners = require('../libs/Listeners');
 const SlackError = require('collins-error');
 
 // INFO: common modules
+const Async = require('async');
 const _ = require('lodash');
-const async = require('async');
 
 // INFO: npm-service-module
 const Slack = require('@slack/client');
