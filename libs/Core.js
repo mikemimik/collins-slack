@@ -12,11 +12,9 @@ const async = require('async');
 const Slack = require('@slack/client');
 
 class CollinsSlack extends Emitter {
-  constructor (coreConfig) {
-    super({
-      wildcard: true,
-      delimiter: ':'
-    });
+  constructor () {
+    super({ wildcard: true, delimiter: ':' });
+    this.swg = null;
     this.cogs = [];
     this.actions = [];
     this.configuration = new Configuration();
