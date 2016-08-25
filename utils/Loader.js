@@ -67,22 +67,22 @@ class Loader {
     next(validationError);
   }
 
-  static initCogs(next) {
-    // console.log(this.constructor.name, 'initCogs', this.config.cogs); // TESTING
+  static initCogs (next) {
     this.Runtime['cogs'] = [];
     let cogList = _.keys(this.config.cogs);
-    async.each(cogList, (cog, each_cb) => {
+    Async.each(cogList, (cog, doneCog) => {
       this.Runtime.cogs.push(this.config.cogs[cog]);
 
-      each_cb(null);
+      doneCog(null);
     }, (err) => {
-      // INFO: all cog triggers have been added to the Listener class
-      // console.log('finished async.each'); // TESTING
-      this.logger.debug(this.constructor.name, 'Loader#initCogs', 'complete', { from: 'gear' });
-    });
+      // TODO: catch error
+      if (err) {
 
-    // console.log('runtime:', this.Runtime.cogs); // TESTING
-    next(null);
+      }
+      // INFO: all cog triggers have been added to the Listener class
+      this.logger.debug(this.constructor.name, 'Loader#initCogs', 'complete', { from: 'gear' });
+      next(null);
+    });
   }
 
   static initListeners(next) {
