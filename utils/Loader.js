@@ -25,7 +25,7 @@ class Loader {
    * @param {Function} next Callback function.
    */
   static initConfig (config, next) {
-    this.logger.gear(this.constructor.name, 'Loader#initConfig');
+    this.logger.debug(this.constructor.name, 'Loader#initConfig', { from: 'gear' });
     this.configuration.configObj.load(config);
     let validationError = null;
     try {
@@ -33,7 +33,7 @@ class Loader {
     } catch (e) {
       validationError = SlackError.convert('Invalid:Config', e);
     }
-    this.logger.gear(this.constructor.name, 'Loader#initConfig', 'complete');
+    this.logger.debug(this.constructor.name, 'Loader#initConfig', 'complete', { from: 'gear' });
     next(validationError);
   }
 
@@ -49,7 +49,7 @@ class Loader {
    * @param {Function} next Callback function.
    */
   static initGear (next) {
-    this.logger.gear(this.constructor.name, 'Loader#initGear');
+    this.logger.debug(this.constructor.name, 'Loader#initGear', { from: 'gear' });
     let validationError = null;
     const Client = Slack.RtmClient;
     const DataStore = Slack.MemoryDataStore;
@@ -62,7 +62,7 @@ class Loader {
     } catch (e) {
       validationError = SlackError.convert('Invalid:Config', e);
     }
-    this.logger.gear(this.constructor.name, 'Loader#initGear', 'complete');
+    this.logger.debug(this.constructor.name, 'Loader#initGear', 'complete', { from: 'gear' });
     next(validationError);
   }
 
@@ -77,6 +77,7 @@ class Loader {
     }, (err) => {
       // INFO: all cog triggers have been added to the Listener class
       // console.log('finished async.each'); // TESTING
+      this.logger.debug(this.constructor.name, 'Loader#initCogs', 'complete', { from: 'gear' });
     });
 
     // console.log('runtime:', this.Runtime.cogs); // TESTING
@@ -84,6 +85,7 @@ class Loader {
   }
 
   static initListeners(next) {
+    this.logger.debug(this.constructor.name, 'Loader#initListeners', { from: 'gear' });
     let listeners = Listeners.getMethods();
     async.each(listeners, (listener, each_cb) => {
       let check = this.Runtime['client'].on(listener, _.bind(Listeners[listener], this, _));
@@ -95,7 +97,9 @@ class Loader {
     }, (err) => {
       if (err) {
         console.log('async.each failed while client.on() was called'); // TESTING
+        this.logger.error(this.constructor.name, 'Loader#initListeners', err);
       }
+      this.logger.debug(this.constructor.name, 'Loader#initListeners', 'complete', { from: 'gear' });
       next(err);
     });
   }
