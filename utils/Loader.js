@@ -85,19 +85,18 @@ class Loader {
     });
   }
 
-  static initListeners(next) {
+  static initListeners (next) {
     this.logger.debug(this.constructor.name, 'Loader#initListeners', { from: 'gear' });
     let listeners = Listeners.getMethods();
-    async.each(listeners, (listener, each_cb) => {
-      let check = this.Runtime['client'].on(listener, _.bind(Listeners[listener], this, _));
+    Async.each(listeners, (listener, doneListener) => {
+      let check = this.Runtime['client'].on(listener, _.bind(Listeners[listener], this));
       if (check === this.Runtime['client']) {
-        each_cb(null);
+        doneListener(null);
       } else {
-        each_cb(true);
+        doneListener('async.each failed while fn.on() was called');
       }
     }, (err) => {
       if (err) {
-        console.log('async.each failed while client.on() was called'); // TESTING
         this.logger.error(this.constructor.name, 'Loader#initListeners', err);
       }
       this.logger.debug(this.constructor.name, 'Loader#initListeners', 'complete', { from: 'gear' });
