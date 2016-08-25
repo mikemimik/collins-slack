@@ -51,6 +51,7 @@ class CollinsSlack extends Emitter {
       this.initialized = true;
 
       // INFO: all the initializations have been completed
+      this.logger.debug(this.constructor.name, 'Core#init', 'complete', { from: 'gear' });
       next(err);
     });
   }
