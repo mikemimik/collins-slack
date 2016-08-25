@@ -54,10 +54,11 @@ class Loader {
     const Client = Slack.RtmClient;
     const DataStore = Slack.MemoryDataStore;
     try {
-      this.Runtime['dataStore'] = new DataStore({ logger: this.logger });
+      // this.Runtime['dataStore'] = new DataStore({ logger: this.logger });
+      this.Runtime['dataStore'] = new DataStore();
       this.Runtime['client'] = new Client(
         this.configuration.configObj.get('token'),
-        { logger: this.logger, dataStore: this.Runtime['dataStore'] }
+        { logger: this.logger.log.bind(this.logger), dataStore: this.Runtime['dataStore'] }
       );
     } catch (e) {
       validationError = SlackError.convert('Invalid:Config', e);
