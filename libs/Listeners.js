@@ -19,7 +19,7 @@ class Listeners {
   /**
    * Function to return static functions of this class
    *
-   * @retuns {Array} methods List of static functions in this class
+   * @retuns {String[]}  List of static functions in this class
    */
   static getMethods () {
     // INFO: get all properties of this class (object)
