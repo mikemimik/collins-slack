@@ -18,7 +18,6 @@ class CollinsSlack extends Emitter {
     this.cogs = [];
     this.actions = [];
     this.configuration = new Configuration();
-    this.configuration.files.push('index.js');
     this.Runtime = require('../utils/Runtime');
     // INFO: internally storying info for convenience
     // TODO: don't do this
