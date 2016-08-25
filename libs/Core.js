@@ -28,17 +28,19 @@ class CollinsSlack extends Emitter {
     };
   }
 
-  init (next) {
-    // TODO: initialize logger
-    async.series([
-      Loader.initConfig.bind(this),
+  init (sgw, next) {
+    this.logger = sgw.logger;
+    this.logger.filters.push(this.configuration.options.logger.filter.gear);
+    this.logger.debug(this.constructor.name, 'Core#init', { from: 'gear' });
+    Async.series([
+      Loader.initConfig.bind(this, sgw.config),
       Loader.initGear.bind(this),
-      Loader.initCogs.bind(this),
+      // Loader.initCogs.bind(this)
       Loader.initListeners.bind(this)
     ], (err, results) => {
       if (err) {
         // TODO: emit an error up to collins
-        next(err);
+        // next(err);
       }
 
       // INFO: A loader init stage errored
