@@ -6,7 +6,7 @@ const Loader = require('../utils/Loader');
 
 // INFO: common modules
 const Emitter = require('eventemitter2').EventEmitter2;
-const async = require('async');
+const Async = require('async');
 
 // INFO: npm-service-module
 const Slack = require('@slack/client');
