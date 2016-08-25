@@ -17,8 +17,4 @@ Configuration.prototype.configure = function configure () {
 
 };
 
-Configuration.prototype.setPath = function setPath (p) {
-
-};
-
 module.exports = Configuration;
