@@ -7,13 +7,17 @@ const Service = require('../utils/Service');
 const _ = require('lodash');
 
 class Listeners {
-  static message(data, context) {
-    console.log('Listeners.message:', 'data:', data, 'context:', context);
-    if (data.subtype) {
-      Service.interpret(data.message, this);
-    } else {
-      Service.interpret(data, this);
-    }
+  static message (data, context) {
+    this.logger.gear(this.constructor.name, 'Listeners#message', 'fn called');
+    this.logger.debug(this.constructor.name, 'Listeners#message',
+      'data:', data,
+      'context:', context
+    );
+    // if (data.subtype) {
+    //   Service.interpret(data.message, this);
+    // } else {
+    //   Service.interpret(data, this);
+    // }
   }
 
   /**
