@@ -24,12 +24,13 @@ class Loader {
    *
    * @param {Function} next Callback function.
    */
-  static initConfig (config, next) {
+  static initConfig (sgw, next) {
     this.logger.debug(this.constructor.name, 'Loader#initConfig', { from: 'gear' });
-    this.configuration.configObj.load(config);
+    this.configuration.configObj.load(sgw.config);
     let validationError = null;
     try {
       this.configuration.configObj.validate();
+      this.configuration.logLevel = sgw.logLevel;
     } catch (e) {
       validationError = SlackError.convert('Invalid:Config', e);
     }
