@@ -1,8 +1,9 @@
 'use strict';
 
 // INFO: service-gear specific modules
-const Listeners = require('../libs/Listeners');
+const CoreHelper = require('collins-core-helper');
 const SlackError = require('collins-error');
+const Listeners = require('../libs/Listeners');
 
 // INFO: common modules
 const Async = require('async');
@@ -55,11 +56,13 @@ class Loader {
     const Client = Slack.RtmClient;
     const DataStore = Slack.MemoryDataStore;
     try {
-      // this.Runtime['dataStore'] = new DataStore({ logger: this.logger });
-      this.Runtime['dataStore'] = new DataStore();
+      let logger = CoreHelper.getLogger(this.configuration.logLevel, 'gearCore');
+      // this.Runtime['dataStore'] = new DataStore(); // TESTING
+      this.Runtime['dataStore'] = new DataStore({ logger: logger.log.bind(logger) });
       this.Runtime['client'] = new Client(
         this.configuration.configObj.get('token'),
-        { logger: this.logger.log.bind(this.logger), dataStore: this.Runtime['dataStore'] }
+        // { dataStore: this.Runtime['dataStore'] } // TESTING
+        { logger: logger.log.bind(logger), dataStore: this.Runtime['dataStore'] }
       );
     } catch (e) {
       validationError = SlackError.convert('Invalid:Config', e);

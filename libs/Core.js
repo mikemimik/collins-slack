@@ -2,6 +2,7 @@
 
 // INFO: service-gear specific modules
 const Configuration = require('./Configuration');
+const CoreHelper = require('collins-core-helper');
 const Loader = require('../utils/Loader');
 
 // INFO: common modules
@@ -28,8 +29,7 @@ class CollinsSlack extends Emitter {
   }
 
   init (sgw, next) {
-    this.logger = sgw.logger;
-    this.logger.filters.push(this.configuration.options.logger.filter.gear);
+    this.logger = CoreHelper.getLogger(sgw.logLevel, 'gear');
     this.logger.debug(this.constructor.name, 'Core#init', { from: 'gear' });
     Async.series([
       Loader.initConfig.bind(this, sgw),
