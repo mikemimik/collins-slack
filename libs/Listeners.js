@@ -8,10 +8,11 @@ const _ = require('lodash');
 
 class Listeners {
   static message (data, context) {
-    this.logger.gear(this.constructor.name, 'Listeners#message', 'fn called');
+    this.logger.debug(this.constructor.name, 'Listeners#message', 'fn called', { from: 'gear' });
     this.logger.debug(this.constructor.name, 'Listeners#message',
       'data:', data,
-      'context:', context
+      'context:', context,
+      { from: 'gear' }
     );
     // if (data.subtype) {
     //   Service.interpret(data.message, this);
