@@ -42,7 +42,9 @@ class Service {
       }
     };
 
-    console.log('msg:', msg); // TESTING
+    context.logger.debug(context.constructor.name, 'Service#interpret',
+      'msg:', msg
+    );
 
     async.each(triggers, (t, foundTrigger_cb) => {
       let ct = t.substring(1);
