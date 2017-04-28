@@ -38,6 +38,10 @@ class CollinsSlack extends Emitter {
       Loader.initListeners.bind(this)
     ], (err, results) => {
       if (err) {
+        /**
+         * INFO: if we get an error here the following might have happened:
+         * - config validation (initConfig) failed.
+         */
         // TODO: emit an error up to collins
         // next(err);
       }
